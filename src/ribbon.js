@@ -15,6 +15,14 @@ function defaultRadius(d) {
   return d.radius;
 }
 
+function defaultSourcePadding(d) {
+  return d.sourcePadding;
+}
+
+function defaultTargetPadding(d) {
+  return d.targetPadding;
+}
+
 function defaultStartAngle(d) {
   return d.startAngle;
 }
@@ -27,6 +35,8 @@ export default function() {
   var source = defaultSource,
       target = defaultTarget,
       radius = defaultRadius,
+      sourcePadding = defaultSourcePadding,
+      targetPadding = defaultTargetPadding,
       startAngle = defaultStartAngle,
       endAngle = defaultEndAngle,
       context = null;
@@ -37,11 +47,15 @@ export default function() {
         s = source.apply(this, argv),
         t = target.apply(this, argv),
         sr = +radius.apply(this, (argv[0] = s, argv)),
+        sp = +sourcePadding.apply(this, (argv[0] = s, argv)),
+        sr = sr - sp,
         sa0 = startAngle.apply(this, argv) - halfPi,
         sa1 = endAngle.apply(this, argv) - halfPi,
         sx0 = sr * cos(sa0),
         sy0 = sr * sin(sa0),
         tr = +radius.apply(this, (argv[0] = t, argv)),
+        tp = +targetPadding.apply(this, (argv[0] = t, argv)),
+        tr = tr - tp,
         ta0 = startAngle.apply(this, argv) - halfPi,
         ta1 = endAngle.apply(this, argv) - halfPi;
 
@@ -61,6 +75,14 @@ export default function() {
 
   ribbon.radius = function(_) {
     return arguments.length ? (radius = typeof _ === "function" ? _ : constant(+_), ribbon) : radius;
+  };
+
+  ribbon.sourcePadding = function(_) {
+    return arguments.length ? (sourcePadding = typeof _ === "function" ? _ : constant(+_), ribbon) : sourcePadding;
+  };
+
+  ribbon.targetPadding = function(_) {
+    return arguments.length ? (targetPadding = typeof _ === "function" ? _ : constant(+_), ribbon) : targetPadding;
   };
 
   ribbon.startAngle = function(_) {

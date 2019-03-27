@@ -4,6 +4,8 @@ var tape = require("tape"),
 tape("d3.ribbon() has the expected defaults", function(test) {
   var r = d3.ribbon();
   test.equal(r.radius()({radius: 42}), 42);
+  test.equal(r.sourcePadding()({sourcePadding: 42}), 42);
+  test.equal(r.targetPadding()({targetPadding: 42}), 42);
   test.equal(r.startAngle()({startAngle: 42}), 42);
   test.equal(r.endAngle()({endAngle: 42}), 42);
   test.deepEqual(r.source()({source: {name: "foo"}}), {name: "foo"});
@@ -19,6 +21,26 @@ tape("ribbon.radius(radius) sets the radius accessor", function(test) {
   test.equal(r.radius(), foo);
   test.equal(r.radius(42), r);
   test.equal(r.radius()(), 42);
+  test.end();
+});
+
+tape("ribbon.sourcePadding(sourcePadding) sets the sourcePadding accessor", function(test) {
+  var foo = function(d) { return d.foo; },
+      r = d3.ribbon();
+  test.equal(r.sourcePadding(foo), r);
+  test.equal(r.sourcePadding(), foo);
+  test.equal(r.sourcePadding(42), r);
+  test.equal(r.sourcePadding()(), 42);
+  test.end();
+});
+
+tape("ribbon.targetPadding(targetPadding) sets the targetPadding accessor", function(test) {
+  var foo = function(d) { return d.foo; },
+      r = d3.ribbon();
+  test.equal(r.targetPadding(foo), r);
+  test.equal(r.targetPadding(), foo);
+  test.equal(r.targetPadding(42), r);
+  test.equal(r.targetPadding()(), 42);
   test.end();
 });
 
